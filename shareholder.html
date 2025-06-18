@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shareholder - Win-Wing Production Inc.</title>
+  <style>
+    :root {
+      --primary-color: #f8fafc; /* 淺灰白 */
+      --secondary-color: #d4c08a; /* 柔和金 */
+      --accent-color: #8b5cf6; /* 柔和紫 */
+      --text-color: #1f2937; /* 深灰 */
+      --glass-bg: rgba(255, 255, 255, 0.2);
+      --glass-border: 1px solid rgba(255, 255, 255, 0.3);
+      --glow-shadow: 0 0 8px rgba(139, 92, 246, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', 'Noto Sans JP', sans-serif;
+    }
+
+    body {
+      color: var(--text-color);
+      line-height: 1.9;
+      background: var(--primary-color);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* 微光粒子背景 */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 1px, transparent 1px);
+      background-size: 8px 8px;
+      animation: twinkle 7s infinite;
+      z-index: -1;
+      opacity: 0.15;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: var(--glass-bg);
+      backdrop-filter: blur(15px);
+      border-bottom: var(--glass-border);
+      z-index: 1000;
+      padding: 1.5rem 2rem;
+      animation: slideInDown 0.5s ease-out;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+    }
+
+    nav a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.1rem;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    nav a.active {
+      color: var(--accent-color);
+      font-weight: 600;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background: var(--accent-color);
+      transition: width 0.3s;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    nav a:hover {
+      color: var(--accent-color);
+    }
+
+    section {
+      padding: 8rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      opacity: 0;
+      animation: fadeIn 0.8s ease-out forwards;
+      animation-delay: 0.1s;
+    }
+
+    .hero {
+      height: 60vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: var(--primary-color);
+      color: var(--text-color);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.2) 1px, transparent 1px);
+      background-size: 15px 15px;
+      opacity: 0.2;
+      animation: twinkle 7s infinite;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      z-index: 1;
+      overflow: hidden;
+      white-space: nowrap;
+      animation: type 3.5s steps(40) forwards;
+    }
+
+    .hero p {
+      font-size: 1.6rem;
+      font-weight: 300;
+      z-index: 1;
+      opacity: 0;
+      animation: slideInUp 0.6s ease-out 3.7s forwards;
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 2.5rem;
+      color: var(--text-color);
+      position: relative;
+    }
+
+    h2::before {
+      content: '❱';
+      position: absolute;
+      left: -2rem;
+      color: var(--accent-color);
+      font-size: 1.3rem;
+    }
+
+    p {
+      margin-bottom: 2rem;
+      padding-left: 2.5rem;
+      position: relative;
+      font-size: 1.1rem;
+      opacity: 0;
+      animation: slideInLeft 0.6s ease-out forwards;
+      animation-delay: calc(0.15s * var(--order));
+    }
+
+    p::before {
+      content: '➤';
+      position: absolute;
+      left: 0;
+      color: var(--accent-color);
+      font-size: 1.2rem;
+    }
+
+    .card {
+      background: var(--glass-bg);
+      border: var(--glass-border);
+      padding: 2.5rem;
+      border-radius: 10px;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+      animation: scan 5s infinite;
+    }
+
+    .card:hover {
+      box-shadow: var(--glow-shadow);
+    }
+
+    /* 長條圖樣式 */
+    .bar-chart {
+      margin-top: 2rem;
+      max-width: 800px;
+    }
+
+    .bar {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      gap: 1rem;
+    }
+
+    .bar-label {
+      width: 150px;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--text-color);
+    }
+
+    .logo-placeholder {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeIn 0.8s ease-out forwards;
+      animation-delay: 0.5s;
+    }
+
+    .logo-togawa {
+      background: var(--secondary-color);
+      color: var(--text-color);
+      font-size: 1rem;
+      font-weight: 500;
+      border: 1px solid var(--secondary-color);
+    }
+
+    .logo-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: contain;
+      opacity: 0;
+      animation: fadeIn 0.8s ease-out forwards;
+      animation-delay: 0.5s;
+    }
+
+    .logo-empty {
+      background: transparent;
+    }
+
+    .bar-container {
+      flex-grow: 1;
+      height: 30px;
+      background: rgba(139, 92, 246, 0.1);
+      border-radius: 5px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: var(--accent-color);
+      animation: growBar 1.5s ease-out forwards;
+    }
+
+    .bar-fill::after {
+      content: attr(data-percentage);
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-color);
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    /* 設置長條寬度 */
+    .bar-togawa .bar-fill { width: 45%; }
+    .bar-bushiroad .bar-fill { width: 30%; }
+    .bar-others .bar-fill { width: 25%; }
+
+    footer {
+      background: var(--primary-color);
+      color: var(-- Middle gray (#1f2937) text color for readability );
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9rem;
+      font-weight: 300;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideInDown {
+      from { transform: translateY(-100%); }
+      to { transform: translateY(0); }
+    }
+
+    @keyframes slideInUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes slideInLeft {
+      from { transform: translateX(-30px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes type {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.15; }
+      50% { opacity: 0.3; }
+    }
+
+    @keyframes scan {
+      0% { left: -100%; }
+      50% { left: 100%; }
+      100% { left: 100%; }
+    }
+
+    @keyframes growBar {
+      from { width: 0; }
+      to { width: var(--bar-width); }
+    }
+
+    /* 段落動畫順序 */
+    .card p:nth-child(1) { --order: 1; }
+    .card p:nth-child(2) { --order: 2; }
+  </style>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Business</a></li>
+      <li><a href="#">Artists</a></li>
+      <li><a href="#">Careers</a></li>
+      <li><a href="#">Contact</a></li>
+      <li><a href="#" class="active">Shareholder</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <h1>Shareholder Information</h1>
+    <p>Empowering Value, Shaping the Future</p>
+  </section>
+
+  <section id="structure">
+    <h2>Shareholder Structure</h2>
+    <div class="card">
+      <p>Togawa Group, led by Sadaharu Togawa, is our largest shareholder, driving our vision for global entertainment.</p>
+      <p>Bushiroad, a leader in multimedia franchises, supports our innovative projects as the second-largest shareholder.</p>
+      <div class="bar-chart">
+        <div class="bar bar-togawa">
+          <div class="bar-label">Togawa Group</div>
+          <div class="logo-placeholder logo-togawa">T</div>
+          <div class="bar-container">
+            <div class="bar-fill" data-percentage="45%" style="--bar-width: 45%;"></div>
+          </div>
+        </div>
+        <div class="bar bar-bushiroad">
+          <div class="bar-label">Bushiroad</div>
+          <img class="logo-img" src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Bushiroad_Logo.svg" alt="Bushiroad Logo">
+          <div class="bar-container">
+            <div class="bar-fill" data-percentage="30%" style="--bar-width: 30%;"></div>
+          </div>
+        </div>
+        <div class="bar bar-others">
+          <div class="bar-label">Others</div>
+          <div class="logo-placeholder logo-empty"></div>
+          <div class="bar-container">
+            <div class="bar-fill" data-percentage="25%" style="--bar-width: 25%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Win-Wing Production Inc..</p>
+    This is a fanmade website and is not affiliated with Bushiroad, BanG Dream! It's MyGO!!!!!, or Ave Mujica.
+  </footer>
+</body>
+</html>

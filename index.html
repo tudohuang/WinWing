@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Win-Wing Production Inc.</title>
+  <style>
+    :root {
+      --primary-color: #f8fafc; /* 淺灰白 */
+      --secondary-color: #d4c08a; /* 柔和金 */
+      --accent-color: #8b5cf6; /* 柔和紫 */
+      --text-color: #1f2937; /* 深灰 */
+      --glass-bg: rgba(255, 255, 255, 0.2);
+      --glass-border: 1px solid rgba(255, 255, 255, 0.3);
+      --glow-shadow: 0 0 8px rgba(139, 92, 246, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', 'Noto Sans JP', sans-serif;
+    }
+
+    body {
+      color: var(--text-color);
+      line-height: 1.9;
+      background: var(--primary-color);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* 微光粒子背景 */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 1px, transparent 1px);
+      background-size: 8px 8px;
+      animation: twinkle 6s infinite;
+      z-index: -1;
+      opacity: 0.15;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: var(--glass-bg);
+      backdrop-filter: blur(15px);
+      border-bottom: var(--glass-border);
+      z-index: 1000;
+      padding: 1.5rem 2rem;
+      animation: slideInDown 0.5s ease-out;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+    }
+
+    nav a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.1rem;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background: var(--accent-color);
+      transition: width 0.3s;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    nav a:hover {
+      color: var(--accent-color);
+    }
+
+    section {
+      padding: 8rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      opacity: 0;
+      animation: fadeIn 0.8s ease-out forwards;
+      animation-delay: 0.1s;
+    }
+
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: var(--primary-color);
+      color: var(--text-color);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.2) 1px, transparent 1px);
+      background-size: 15px 15px;
+      opacity: 0.2;
+      animation: twinkle 7s infinite;
+    }
+
+    .hero h1 {
+      font-size: 4.5rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      z-index: 1;
+      overflow: hidden;
+      white-space: nowrap;
+      animation: type 3s steps(40) forwards;
+    }
+
+    .hero p {
+      font-size: 1.8rem;
+      font-weight: 300;
+      z-index: 1;
+      opacity: 0;
+      animation: slideInUp 0.6s ease-out 3.2s forwards;
+    }
+
+    h2 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 3rem;
+      color: var(--text-color);
+      position: relative;
+    }
+
+    h2::before {
+      content: '❱';
+      position: absolute;
+      left: -2rem;
+      color: var(--accent-color);
+      font-size: 1.3rem;
+    }
+
+    p {
+      margin-bottom: 2rem;
+      padding-left: 2.5rem;
+      position: relative;
+      font-size: 1.1rem;
+      opacity: 0;
+      animation: slideInLeft 0.6s ease-out forwards;
+      animation-delay: calc(0.15s * var(--order));
+    }
+
+    p::before {
+      content: '➤';
+      position: absolute;
+      left: 0;
+      color: var(--accent-color);
+      font-size: 1.2rem;
+    }
+
+    .card {
+      background: var(--glass-bg);
+      border: var(--glass-border);
+      padding: 2.5rem;
+      border-radius: 10px;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+      animation: scan 5s infinite;
+    }
+
+    .card:hover {
+      box-shadow: var(--glow-shadow);
+    }
+
+    footer {
+      background: var(--primary-color);
+      color: var(--text-color);
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9rem;
+      font-weight: 300;
+    }
+
+    footer a {
+      color: var(--accent-color);
+      text-decoration: none;
+      margin: 0 0.5rem;
+      transition: color 0.3s;
+    }
+
+    footer a:hover {
+      color: var(--secondary-color);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideInDown {
+      from { transform: translateY(-100%); }
+      to { transform: translateY(0); }
+    }
+
+    @keyframes slideInUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes slideInLeft {
+      from { transform: translateX(-30px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes type {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.15; }
+      50% { opacity: 0.3; }
+    }
+
+    @keyframes scan {
+      0% { left: -100%; }
+      50% { left: 100%; }
+      100% { left: 100%; }
+    }
+
+    /* 段落動畫順序 */
+    .card p:nth-child(1) { --order: 1; }
+    .card p:nth-child(2) { --order: 2; }
+    .card p:nth-child(3) { --order: 3; }
+  </style>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#business">Business</a></li>
+      <li><a href="#artists">Artists</a></li>
+      <li><a href="#careers">Careers</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <h1>Win-Wing Production Inc.</h1>
+    <p>Crafting Global Icons, Illuminating the Future.</p>
+  </section>
+
+  <section id="about">
+    <h2>About Us</h2>
+    <div class="card">
+      <p>Win-Wing Production Inc. is a global leader in idol entertainment, shaping cultural icons with precision and vision.</p>
+      <p>Since 2020, we have driven innovation in artistry, delivering transformative experiences to audiences worldwide.</p>
+      <p>Our mission is to craft timeless stars through creativity and cutting-edge technology.</p>
+    </div>
+  </section>
+
+  <section id="business">
+    <h2>Our Business</h2>
+    <div class="card">
+      <p>Artist Management: Curating talent with strategic vision and world-class support.</p>
+      <p>Global Productions: Designing iconic performances that resonate across continents.</p>
+      <p>Digital Innovation: Leading with immersive virtual and augmented reality experiences.</p>
+    </div>
+  </section>
+
+  <section id="artists">
+    <h2>Our Artists</h2>
+    <div class="card">
+      <p>Stellar☆Wing: A global idol group redefining entertainment with captivating energy.</p>
+      <p>Luna Eclipse: Solo artist blending emotive artistry with innovative soundscapes.</p>
+      <p>Project Nova: Pioneering the future with virtual idols in the digital realm.</p>
+    </div>
+  </section>
+
+  <section id="careers">
+    <h2>Careers</h2>
+    <div class="card">
+      <p>Shape the future of global entertainment with creativity and innovation.</p>
+      <p>Open roles: Artist Development Lead, Stage Production Manager, Digital Experience Designer.</p>
+      <p>We seek professionals to elevate our vision and amplify our stars’ impact.</p>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <div class="card">
+      <p>Email: info@winwing-prod.com</p>
+      <p>Address: 789 Stardust Plaza, Tokyo, Japan</p>
+      <p>Connect: <a href="#">X</a> | <a href="#">ConnectSphere</a> | <a href="#">StarStream</a></p>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Win-Wing Production Inc. | Fictional company site for creative and parody purposes.</p>
+  </footer>
+</body>
+</html>
