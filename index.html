@@ -6,10 +6,10 @@
   <title>Win-Wing Production Inc.</title>
   <style>
     :root {
-      --primary-color: #f8fafc; 
-      --secondary-color: #d4c08a; 
-      --accent-color: #8b5cf6; 
-      --text-color: #1f2937; 
+      --primary-color: #f8fafc;
+      --secondary-color: #d4c08a;
+      --accent-color: #8b5cf6;
+      --text-color: #1f2937;
       --glass-bg: rgba(255, 255, 255, 0.2);
       --glass-border: 1px solid rgba(255, 255, 255, 0.3);
       --glow-shadow: 0 0 8px rgba(139, 92, 246, 0.2);
@@ -72,6 +72,11 @@
       transition: color 0.3s;
     }
 
+    nav a.active {
+      color: var(--accent-color);
+      font-weight: 600;
+    }
+
     nav a::after {
       content: '';
       position: absolute;
@@ -92,7 +97,7 @@
     }
 
     section {
-      padding: 8rem 2rem;
+      padding: 6rem 2rem;
       max-width: 1200px;
       margin: 0 auto;
       opacity: 0;
@@ -101,7 +106,7 @@
     }
 
     .hero {
-      height: 100vh;
+      height: 60vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -125,7 +130,7 @@
     }
 
     .hero h1 {
-      font-size: 4.5rem;
+      font-size: 3.5rem;
       font-weight: 700;
       margin-bottom: 2rem;
       z-index: 1;
@@ -135,7 +140,7 @@
     }
 
     .hero p {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       font-weight: 300;
       z-index: 1;
       opacity: 0;
@@ -158,6 +163,13 @@
       font-size: 1.3rem;
     }
 
+    h3 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: 1rem;
+    }
+
     p {
       margin-bottom: 2rem;
       padding-left: 2.5rem;
@@ -166,9 +178,10 @@
       opacity: 0;
       animation: slideInLeft 0.6s ease-out forwards;
       animation-delay: calc(0.15s * var(--order));
+      font-family: 'Consolas', 'Courier New', monospace;
     }
 
-    p::before {
+    #k::before {
       content: '➤';
       position: absolute;
       left: 0;
@@ -202,6 +215,89 @@
       box-shadow: var(--glow-shadow);
     }
 
+    .banner {
+      position: relative;
+      width: 100%;
+      height: 400px;
+      background: var(--glass-bg);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.7;
+    }
+
+    .banner-content {
+      position: absolute;
+      z-index: 1;
+      color: var(--primary-color);
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .banner-content h3 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .banner-content p {
+      font-size: 1.4rem;
+      padding-left: 0;
+      color: var(--primary-color);
+    }
+
+    .banner-content a {
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      background: var(--accent-color);
+      color: var(--primary-color);
+      text-decoration: none;
+      border-radius: 5px;
+      margin-top: 1rem;
+      transition: background 0.3s;
+    }
+
+    .banner-content a:hover {
+      background: var(--secondary-color);
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .promo-card {
+      background: var(--glass-bg);
+      border: var(--glass-border);
+      padding: 1.5rem;
+      border-radius: 10px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .promo-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--glow-shadow);
+    }
+
+    .promo-card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 5px;
+      margin-bottom: 1rem;
+    }
+
     footer {
       background: var(--primary-color);
       color: var(--text-color);
@@ -209,17 +305,6 @@
       padding: 2rem;
       font-size: 0.9rem;
       font-weight: 300;
-    }
-
-    footer a {
-      color: var(--accent-color);
-      text-decoration: none;
-      margin: 0 0.5rem;
-      transition: color 0.3s;
-    }
-
-    footer a:hover {
-      color: var(--secondary-color);
     }
 
     @keyframes fadeIn {
@@ -261,78 +346,68 @@
     .card p:nth-child(1) { --order: 1; }
     .card p:nth-child(2) { --order: 2; }
     .card p:nth-child(3) { --order: 3; }
-    .card p {
-  font-family: 'Consolas', 'Courier New', monospace;
-}
-
   </style>
 </head>
 <body>
   <nav>
     <ul>
-      <li><a href="#about">About</a></li>
-      <li><a href="#business">Business</a></li>
-      <li><a href="#artists">Artists</a></li>
+      <li><a href="#about" class="active">About</a></li>
+      <li><a href="business.html">Business</a></li>
+      <li><a href="#">Artists</a></li>
       <li><a href="#careers">Careers</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="contact.html">Contact</a></li>
       <li><a href="shareholder.html">Shareholder</a></li>
     </ul>
   </nav>
 
   <section class="hero">
     <h1>Win-Wing Production Inc.</h1>
-    <p>Crafting Global Icons, Illuminating the Future.</p>
+    <p>Crafting Global Icons, Illuminating the Future</p>
   </section>
 
   <section id="about">
     <h2>About Us</h2>
     <div class="card">
-      <p>Win-Wing Production Inc. is a global leader in idol entertainment, shaping cultural icons with precision and vision.</p>
-      <p>Since 2020, we have driven innovation in artistry, delivering transformative experiences to audiences worldwide.</p>
-      <p>Our mission is to craft timeless stars through creativity and cutting-edge technology.</p>
+      <p id="k">Win-Wing Production Inc., founded in 2020, is a global leader in idol and music entertainment.</p>
+      <p id="k">Backed by Togawa Group and Bushiroad, we manage stars like Sumimi and Ave Mujica, delivering unforgettable performances.</p>
+      <p id="k">Our mission is to blend creativity and passion, crafting icons like Uika Misumi for the world stage.</p>
     </div>
   </section>
 
-  <section id="business">
-    <h2>Our Business</h2>
-    <div class="card">
-      <p>Artist Management: Curating talent with strategic vision and world-class support.</p>
-      <p>Global Productions: Designing iconic performances that resonate across continents.</p>
-      <p>Digital Innovation: Leading with immersive virtual and augmented reality experiences.</p>
+  <section id="promotions">
+    <h2>Promotions</h2>
+    <div class="banner">
+      <div class="banner-content">
+        <h3>Mythologia: Joint Live 2025</h3>
+        <p>Experience Sumimi and Ave Mujica at K Arena Yokohama, April 26-27, 2025!</p>
+        <a href="https://www.youtube.com/watch?v=3LLj3fTpRoM&list=PL12UaAf_xzfo6TAmxIM7rEvrJAB0rzAAO&index=13&t=912s&pp=iAQB">Learn More</a>
+      </div>
+    </div>
+    <div class="grid-container">
+      <div class="promo-card">
+        <img src="https://s3-ap-northeast-1.amazonaws.com/bang-dream-portal/73293f7d-6aa6-4ba5-983e-928123f23b99.jpg" alt="Sumimi Sweet Escape">
+        <h3>Sumimi: Sweet Escape</h3>
+        <p>Discover Sumimi’s latest single “Sweet Escape,” a vibrant pop anthem by Uika and Mana.</p>
+      </div>
+      <div class="promo-card">
+        <img src="https://s3-ap-northeast-1.amazonaws.com/bang-dream-portal/a987ed76-d3f1-4332-bb19-02ec6f762e13.png" alt="Ave Mujica Kuro no Birthday">
+        <h3>Ave Mujica: Kuro no Birthday</h3>
+        <p>Dive into Ave Mujica’s gothic metal debut single, led by Sakiko Togawa.</p>
+      </div>
     </div>
   </section>
 
   <section id="careers">
     <h2>Careers</h2>
     <div class="card">
-      <p>Shape the future of global entertainment with creativity and innovation.</p>
-      <p>Open roles: Artist Development Lead, Stage Production Manager, Digital Experience Designer.</p>
-      <p>We seek professionals to elevate our vision and amplify our stars’ impact.</p>
-    </div>
-  </section>
-
-  <section id="financials">
-    <h2>Investor Relations</h2>
-    <div class="card">
-      <p>FY2024 Total Revenue: ¥-168,000,000</p>
-      <p>Net Operating Loss: ¥-482,000,000</p>
-      <p>Capital Injection: Provided by TGW Group (45%) and Bushiroad Holdings (30%)</p>
-      <p>Major Expenditures: Stage effects, emotional damage control, tea for executive board</p>
-      <p>Future Outlook: “We expect positive spiritual growth, if not financial.”</p>
-    </div>
-  </section>
-
-  <section id="contact">
-    <h2>Contact Us</h2>
-    <div class="card">
-      <p>Email: info@winwing-prod.com</p>
-      <p>Address: 789 Stardust Plaza, Tokyo, Japan</p>
-      <p>Connect: <a href="#">X</a> | <a href="#">ConnectSphere</a> | <a href="#">StarStream</a></p>
+      <p id="k">Join Win-Wing to shape the future of music entertainment.</p>
+      <p id="k">Open roles: Artist Manager, Stage Designer, Digital Content Creator.</p>
+      <p id="k">Amplify stars like Sumimi and Ave Mujica with us.</p>
     </div>
   </section>
 
   <footer>
-    <p>© 2025 Win-Wing Production Inc..</p>
+    <p>© 2025 Win-Wing Production Inc.</p>
     This is a fanmade website and is not affiliated with Bushiroad, BanG Dream! It's MyGO!!!!!, or Ave Mujica.
   </footer>
 </body>

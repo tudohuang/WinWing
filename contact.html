@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Business - Win-Wing Production Inc.</title>
+  <title>Contact - Win-Wing Production Inc.</title>
   <style>
     :root {
-      --primary-color: #f8fafc; 
-      --secondary-color: #d4c08a; 
-      --accent-color: #8b5cf6; 
-      --text-color: #1f2937; 
+      --primary-color: #f8fafc;
+      --secondary-color: #d4c08a;
+      --accent-color: #8b5cf6;
+      --text-color: #1f2937;
       --glass-bg: rgba(255, 255, 255, 0.2);
       --glass-border: 1px solid rgba(255, 255, 255, 0.3);
       --glow-shadow: 0 0 8px rgba(139, 92, 246, 0.2);
@@ -72,6 +72,11 @@
       transition: color 0.3s;
     }
 
+    nav a.active {
+      color: var(--accent-color);
+      font-weight: 600;
+    }
+
     nav a::after {
       content: '';
       position: absolute;
@@ -101,7 +106,7 @@
     }
 
     .hero {
-      height: 100vh;
+      height: 60vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -125,21 +130,21 @@
     }
 
     .hero h1 {
-      font-size: 4.5rem;
+      font-size: 3.5rem;
       font-weight: 700;
       margin-bottom: 2rem;
       z-index: 1;
       overflow: hidden;
       white-space: nowrap;
-      animation: type 3s steps(40) forwards;
+      animation: type 3.5s steps(40) forwards;
     }
 
     .hero p {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       font-weight: 300;
       z-index: 1;
       opacity: 0;
-      animation: slideInUp 0.6s ease-out 3.2s forwards;
+      animation: slideInUp 0.6s ease-out 3.7s forwards;
     }
 
     h2 {
@@ -166,6 +171,7 @@
       opacity: 0;
       animation: slideInLeft 0.6s ease-out forwards;
       animation-delay: calc(0.15s * var(--order));
+      font-family: 'Consolas', 'Courier New', monospace;
     }
 
     p::before {
@@ -202,6 +208,68 @@
       box-shadow: var(--glow-shadow);
     }
 
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      max-width: 600px;
+      margin: 2rem 0;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      animation: slideInLeft 0.6s ease-out forwards;
+      animation-delay: calc(0.15s * var(--order));
+    }
+
+    .form-group label {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: var(--text-color);
+    }
+
+    .form-group input,
+    .form-group textarea {
+      padding: 0.8rem;
+      font-size: 1rem;
+      font-family: 'Consolas', 'Courier New', monospace;
+      background: rgba(139, 92, 246, 0.1);
+      border: 1px solid var(--secondary-color);
+      border-radius: 5px;
+      color: var(--text-color);
+      resize: vertical;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--accent-color);
+      box-shadow: var(--glow-shadow);
+    }
+
+    .submit-btn {
+      padding: 0.8rem 2rem;
+      font-size: 1.1rem;
+      font-weight: 500;
+      background: var(--accent-color);
+      color: var(--primary-color);
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+      align-self: flex-start;
+      opacity: 0;
+      animation: slideInLeft 0.6s ease-out forwards;
+      animation-delay: 0.75s;
+    }
+
+    .submit-btn:hover {
+      background: var(--secondary-color);
+    }
+
     footer {
       background: var(--primary-color);
       color: var(--text-color);
@@ -209,17 +277,6 @@
       padding: 2rem;
       font-size: 0.9rem;
       font-weight: 300;
-    }
-
-    footer a {
-      color: var(--accent-color);
-      text-decoration: none;
-      margin: 0 0.5rem;
-      transition: color 0.3s;
-    }
-
-    footer a:hover {
-      color: var(--secondary-color);
     }
 
     @keyframes fadeIn {
@@ -260,52 +317,54 @@
 
     .card p:nth-child(1) { --order: 1; }
     .card p:nth-child(2) { --order: 2; }
-    .card p:nth-child(3) { --order: 3; }
-    .card p {
-  font-family: 'Consolas', 'Courier New', monospace;
-}
-
+    .form-group:nth-child(1) { --order: 3; }
+    .form-group:nth-child(2) { --order: 4; }
+    .form-group:nth-child(3) { --order: 5; }
   </style>
 </head>
 <body>
   <nav>
     <ul>
       <li><a href="index.html#about">About</a></li>
-      <li><a href="business.html" class="active">Business</a></li>
+      <li><a href="business.html">Business</a></li>
       <li><a href="#">Artists</a></li>
       <li><a href="index.html#careers">Careers</a></li>
-      <li><a href="contact.html">Contact</a></li>
+      <li><a href="#" class="active">Contact</a></li>
       <li><a href="shareholder.html">Shareholder</a></li>
     </ul>
   </nav>
 
   <section class="hero">
-    <h1>Our Business</h1>
-    <p>Shaping Global Entertainment with Vision and Innovation</p>
+    <h1>Contact Us</h1>
+    <p>Connect with Win-Wing Production Inc.</p>
   </section>
 
-  <section id="business">
-    <h2>Our Core Divisions</h2>
-  
+  <section id="contact">
+    <h2>Get in Touch</h2>
     <div class="card">
-      <h3>Artist Division</h3>
-      <p>Win-Wing is one of the few entertainment companies in Asia with a fully autonomous system for talent development, creative planning, and global expansion.</p>
-      <p>Our roster includes distinct musical groups such as Ave Mujica and Summi, and we are dedicated to discovering and nurturing performers with individuality and creative edge.</p>
-      <p>Every artist is both a brand and a collaborative creation of our team.</p>
-    </div>
-  
-    <div class="card">
-      <h3>Live & Stage Production</h3>
-      <p>From underground live houses to large-scale performances at venues like Budokan, we have the capability to plan and execute across all scales.</p>
-      <p>We focus not only on audiovisual quality but also on narrative-driven staging and emotional resonance—crafting irreplaceable, immersive experiences.</p>
-      <p>We work with a wide range of venues and artistic partners across Japan and abroad.</p>
+      <p>Email: info@winwing-prod.com</p>
+      <p>Address: 5-3-21 Jingumae, Shibuya-ku, Tokyo 150-0001, Japan</p>
+      <form class="contact-form">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" placeholder="Your Name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="Your Email" required>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" rows="5" placeholder="Your Message" required></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Send Message</button>
+      </form>
     </div>
   </section>
-  
 
   <footer>
     <p>© 2025 Win-Wing Production Inc.</p>
-This is a fanmade website and is not affiliated with Bushiroad, BanG Dream! It's MyGO!!!!!, or Ave Mujica.
-</footer>
+    This is a fanmade website and is not affiliated with Bushiroad, BanG Dream! It's MyGO!!!!!, or Ave Mujica.
+  </footer>
 </body>
 </html>
