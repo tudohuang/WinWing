@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artists - Win-Wing Production Inc.</title>
+  <style>
+    :root {
+      --primary-color: #f8fafc;
+      --secondary-color: #d4c08a;
+      --accent-color: #8b5cf6;
+      --text-color: #1f2937;
+      --glass-bg: rgba(255, 255, 255, 0.2);
+      --glass-border: 1px solid rgba(255, 255, 255, 0.3);
+      --glow-shadow: 0 0 8px rgba(139, 92, 246, 0.2);
+      --dark-bg: rgba(31, 41, 55, 0.6);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', 'Noto Sans JP', sans-serif;
+    }
+
+    body {
+      color: var(--text-color);
+      line-height: 1.9;
+      background: var(--primary-color);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 1px, transparent 1px);
+      background-size: 8px 8px;
+      animation: twinkle 6s infinite;
+      z-index: -1;
+      opacity: 0.15;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: var(--glass-bg);
+      backdrop-filter: blur(15px);
+      border-bottom: var(--glass-border);
+      z-index: 1000;
+      padding: 1.5rem 2rem;
+      animation: slideInDown 0.5s ease-out;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+    }
+
+    nav a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.1rem;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    nav a.active {
+      color: var(--accent-color);
+      font-weight: 600;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background: var(--accent-color);
+      transition: width 0.3s;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    nav a:hover {
+      color: var(--accent-color);
+    }
+
+    section {
+      padding: 6rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      opacity: 0;
+      animation: fadeIn 0.8s ease-out forwards;
+      animation-delay: 0.1s;
+    }
+
+    .hero {
+      height: 60vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: var(--primary-color);
+      color: var(--text-color);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.2) 1px, transparent 1px);
+      background-size: 15px 15px;
+      opacity: 0.2;
+      animation: twinkle 7s infinite;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      z-index: 1;
+      overflow: hidden;
+      white-space: nowrap;
+      animation: type 3s steps(40) forwards;
+    }
+
+    .hero p {
+      font-size: 1.6rem;
+      font-weight: 300;
+      z-index: 1;
+      opacity: 0;
+      animation: slideInUp 0.6s ease-out 3.2s forwards;
+    }
+
+    h2 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 3rem;
+      color: var(--text-color);
+      position: relative;
+    }
+
+    h2::before {
+      content: '❱';
+      position: absolute;
+      left: -2rem;
+      color: var(--accent-color);
+      font-size: 1.3rem;
+    }
+
+    h3 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: 1rem;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      padding-left: 2.5rem;
+      position: relative;
+      font-size: 1.1rem;
+      font-family: 'Consolas', 'Courier New', monospace;
+    }
+
+    p::before {
+      content: '➤';
+      position: absolute;
+      left: 0;
+      color: var(--accent-color);
+      font-size: 1.2rem;
+    }
+
+    .folder-container {
+      display: flex;
+      flex-direction: row;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .folder {
+      background: var(--glass-bg);
+      border: var(--glass-border);
+      padding: 1.5rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+      flex: 1;
+      text-align: center;
+    }
+
+    .folder.sumimi {
+      border-color: var(--secondary-color);
+      background: rgba(212, 192, 138, 0.1);
+    }
+
+    .folder.ave-mujica {
+      border-color: var(--accent-color);
+      background: var(--dark-bg);
+    }
+
+    .folder:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--glow-shadow);
+    }
+
+    .folder h3 {
+      color: var(--primary-color);
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .member-container {
+      display: none;
+      opacity: 0;
+      transform: translateX(100%);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .member-container.active {
+      display: block;
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .member-grid {
+      display: flex;
+      flex-direction: row;
+      overflow-x: auto;
+      gap: 1.5rem;
+      padding-bottom: 1rem;
+      scrollbar-width: thin;
+      scrollbar-color: var(--accent-color) var(--glass-bg);
+    }
+
+    .member-grid::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .member-grid::-webkit-scrollbar-track {
+      background: var(--glass-bg);
+      border-radius: 4px;
+    }
+
+    .member-grid::-webkit-scrollbar-thumb {
+      background: var(--accent-color);
+      border-radius: 4px;
+    }
+
+    .member-card {
+      background: var(--glass-bg);
+      border: var(--glass-border);
+      padding: 1.5rem;
+      border-radius: 10px;
+      min-width: 280px;
+      max-width: 300px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .member-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--glow-shadow);
+    }
+
+    .member-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 5px;
+      margin-bottom: 1rem;
+      transition: transform 0.3s;
+    }
+
+    .member-card img:hover {
+      transform: scale(1.05);
+    }
+
+    .member-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+      animation: scan 5s infinite;
+    }
+
+    .background {
+      display: none;
+      font-size: 0.95rem;
+      background: rgba(0, 0, 0, 0.1);
+      padding: 1rem;
+      border-radius: 5px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+    }
+
+    .background.active {
+      display: block;
+      max-height: 200px;
+      padding: 1rem;
+    }
+
+    .toggle-background {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      background: var(--accent-color);
+      color: var(--primary-color);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-top: 0.5rem;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .toggle-background:hover {
+      background: var(--secondary-color);
+      transform: scale(1.1);
+    }
+
+    footer {
+      background: var(--primary-color);
+      color: var(--text-color);
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9rem;
+      font-weight: 300;
+    }
+
+    @media (max-width: 768px) {
+      .folder-container {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+
+      .folder {
+        flex: 1 1 45%;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero p {
+        font-size: 1.2rem;
+      }
+
+      .member-card {
+        min-width: 250px;
+      }
+
+      .background {
+        font-size: 0.85rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .folder {
+        flex: 1 1 100%;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideInDown {
+      from { transform: translateY(-100%); }
+      to { transform: translateY(0); }
+    }
+
+    @keyframes slideInUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes slideInRight {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes type {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.15; }
+      50% { opacity: 0.3; }
+    }
+
+    @keyframes scan {
+      0% { left: -100%; }
+      50% { left: 100%; }
+      100% { left: 100%; }
+    }
+
+    .member-card p:nth-child(2) { animation: slideInRight 0.5s ease-out 0.1s forwards; opacity: 0; }
+    .member-card p:nth-child(3) { animation: slideInRight 0.5s ease-out 0.2s forwards; opacity: 0; }
+    .member-card .background { animation: slideInRight 0.5s ease-out 0.3s forwards; opacity: 0; }
+  </style>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="business.html">Business</a></li>
+      <li><a href="#" class="active">Artists</a></li>
+      <li><a href="index.html#careers">Careers</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="shareholder.html">Shareholder</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <h1>Our Artists</h1>
+    <p>Discover Sumimi & Ave Mujica</p>
+  </section>
+
+  <section id="artists">
+    <h2>Meet Our Stars</h2>
+    <div class="folder-container">
+      <div class="folder sumimi" onclick="toggleMembers('sumimi-members')">
+        <h3>Sumimi</h3>
+      </div>
+      <div class="folder ave-mujica" onclick="toggleMembers('ave-mujica-members')">
+        <h3>Ave Mujica</h3>
+      </div>
+    </div>
+
+    <div id="sumimi-members" class="member-container">
+      <div class="member-grid">
+        <div class="member-card" id="uika-sumimi">
+          <img src="https://assets.st-note.com/img/1695241554733-UJtJIFOeXh.png?width=1200" alt="Uika Misumi">
+          <h3>Uika Misumi</h3>
+          <p>Sumimi’s lead vocalist, known for her radiant energy and dual role as Doloris in Ave Mujica.</p>
+          <p>Star of “Sweet Escape,” captivating fans with her versatile voice.</p>
+        </div>
+        <div class="member-card" id="mana-sumimi">
+          <img src="https://media.tenor.com/fyjSFSDzpGUAAAAe/mana-sumida-bandori.png" alt="Mana Sumita">
+          <h3>Mana Sumita</h3>
+          <p>Sumimi’s heart, bringing fresh pop vibes with her dynamic performances.</p>
+          <p>Co-star of “Sweet Escape,” shining in music videos and live shows.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="ave-mujica-members" class="member-container">
+      <div class="member-grid">
+        <div class="member-card" id="sakiko-ave">
+          <img src="https://truth.bahamut.com.tw/s01/202309/1a10569e349e95d6560b59f49fd7279e.JPG" alt="Sakiko Togawa">
+          <h3>Sakiko Togawa (Oblivionis)</h3>
+          <p>Leader and keyboardist, crafting gothic metal anthems like “Kuro no Birthday.”</p>
+          <p>Drives Ave Mujica’s dark, theatrical vision with intensity.</p>
+        </div>
+        <div class="member-card" id="uika-ave">
+          <img src="https://finalweapon.net/wp-content/uploads/2024/12/Ave-Mujica-The-Die-is-Cast.jpg" alt="Uika Misumi Doloris">
+          <h3>Uika Misumi (Doloris)</h3>
+          <p>Vocalist, delivering haunting performances in “Mythologia.”</p>
+          <p>Balances Sumimi’s pop charm with Ave Mujica’s gothic depth.</p>
+        </div>
+        <div class="member-card" id="mutsumi-ave">
+          <img src="https://i.ytimg.com/vi/N7hGFcHQd6U/maxresdefault.jpg" alt="Mutsumi Wakaba">
+          <h3>Mutsumi Wakaba (Mortis)</h3>
+          <p>Guitarist, infusing intricate riffs and emotional depth.</p>
+          <p>Key performer in “Kuro no Birthday” live shows.</p>
+        </div>
+        <div class="member-card" id="umiri-ave">
+          <img src="https://i.namu.wiki/i/nWavkmrUEwFjSP5Ag3asfpCqemZcsKXsVkM7xUPC7GfGghvrbqplj9x2jUrweCdlejpylbmJLO4wFxZNt276rA.webp" alt="Umiri Yahata">
+          <h3>Umiri Yahata (Timoris)</h3>
+          <p>Bassist, anchoring heavy sound with powerful rhythms.</p>
+          <p>Shines in 2025 K Arena Yokohama Joint Live.</p>
+        </div>
+        <div class="member-card" id="nyamu-ave">
+          <img src="https://i.ytimg.com/vi/EFhLYrJV6LA/hq720.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAElAADIQj0AgKJD8AEB-AH-CYAC0AWKAgwIABABGGMgVihlMA8=&rs=AOn4CLA7HHpkQRKcEAM4NBrA3_atfpE0PQ" alt="Nyamu Yuutenji">
+          <h3>Nyamu Yuutenji (Amoris)</h3>
+          <p>Drummer, driving intense beats in “Mythologia.”</p>
+          <p>Brings energy to dramatic live performances.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Win-Wing Production Inc.</p>
+    This is a fanmade website and is not affiliated with Bushiroad, BanG Dream! It's MyGO!!!!!, or Ave Mujica.
+  </footer>
+
+  <script>
+    function toggleMembers(containerId) {
+      const containers = document.querySelectorAll('.member-container');
+      containers.forEach(container => {
+        if (container.id === containerId) {
+          container.classList.toggle('active');
+        } else {
+          container.classList.remove('active');
+        }
+      });
+    }
+
+    function toggleBackground(cardId) {
+      const background = document.querySelector(`#${cardId} .background`);
+      background.classList.toggle('active');
+    }
+  </script>
+</body>
+</html>
