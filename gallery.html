@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore BanG Dream! moments with Sumimi and Ave Mujica at Win-Wing Production Inc.">
+  <title>Gallery | Win-Wing Production Inc.</title>
+  <style>
+    :root {
+      --primary-color: #f8fafc;
+      --secondary-color: #d4c08a;
+      --accent-color: #8b5cf6;
+      --text-color: #1f2937;
+      --glass-bg: rgba(255, 255, 255, 0.2);
+      --glass-border: 1px solid rgba(255, 255, 255, 0.3);
+      --glow-shadow: 0 0 8px rgba(139, 92, 246, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', 'Noto Sans JP', sans-serif;
+    }
+
+    body {
+      color: var(--text-color);
+      line-height: 1.9;
+      background: var(--primary-color);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 1px, transparent 1px);
+      background-size: 8px 8px;
+      animation: twinkle 6s infinite;
+      z-index: -1;
+      opacity: 0.15;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: var(--glass-bg);
+      backdrop-filter: blur(15px);
+      border-bottom: var(--glass-border);
+      z-index: 1000;
+      padding: 1.5rem 2rem;
+      animation: slideInDown 0.5s ease-out;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+    }
+
+    nav a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.1rem;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    nav a.active {
+      color: var(--accent-color);
+      font-weight: 600;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background: var(--accent-color);
+      transition: width 0.3s;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    nav a:hover {
+      color: var(--accent-color);
+    }
+
+    section {
+      padding: 6rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      opacity: 0;
+      animation: fadeIn 0.8s ease-out forwards;
+      animation-delay: 0.1s;
+    }
+
+    .hero {
+      height: 60vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: var(--primary-color);
+      color: var(--text-color);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.2) 1px, transparent 1px);
+      background-size: 15px 15px;
+      opacity: 0.2;
+      animation: twinkle 7s infinite;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      z-index: 1;
+      overflow: hidden;
+      white-space: nowrap;
+      animation: type 3s steps(40) forwards;
+    }
+
+    .hero p {
+      font-size: 1.6rem;
+      font-weight: 300;
+      z-index: 1;
+      opacity: 0;
+      animation: slideInUp 0.6s ease-out 3.2s forwards;
+    }
+
+    h2 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 3rem;
+      color: var(--text-color);
+      position: relative;
+    }
+
+    h2::before {
+      content: '❱';
+      position: absolute;
+      left: -2rem;
+      color: var(--accent-color);
+      font-size: 1.3rem;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .gallery-card {
+      background: var(--glass-bg);
+      border: var(--glass-border);
+      padding: 1.5rem;
+      border-radius: 10px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      opacity: 0;
+      animation: slideInLeft 0.6s ease-out forwards;
+      animation-delay: calc(0.15s * var(--order));
+    }
+
+    .gallery-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--glow-shadow);
+    }
+
+    .gallery-card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 5px;
+      margin-bottom: 1rem;
+    }
+
+    .gallery-card h3 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .gallery-card p {
+      font-size: 1rem;
+      color: var(--text-color);
+      font-family: 'Consolas', 'Courier New', monospace;
+      padding-left: 0;
+    }
+
+    .lightbox {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      animation: fadeIn 0.3s ease-out forwards;
+    }
+
+    .lightbox.active {
+      display: flex;
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 80vh;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .lightbox button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--accent-color);
+      color: var(--primary-color);
+      border: none;
+      font-size: 2rem;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+
+    .lightbox button:hover {
+      background: var(--secondary-color);
+    }
+
+    .lightbox .prev {
+      left: 1rem;
+    }
+
+    .lightbox .next {
+      right: 1rem;
+    }
+
+    .lightbox .close {
+      top: 1rem;
+      right: 1rem;
+      font-size: 1.5rem;
+      padding: 0.5rem;
+      transform: none;
+    }
+
+    footer {
+      background: var(--primary-color);
+      color: var(--text-color);
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9rem;
+      font-weight: 300;
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        height: 50vh;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero p {
+        font-size: 1.2rem;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      }
+
+      nav ul {
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero {
+        height: 40vh;
+        min-height: 200px;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+
+      nav a {
+        font-size: 1rem;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideInDown {
+      from { transform: translateY(-100%); }
+      to { transform: translateY(0); }
+    }
+
+    @keyframes slideInUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes slideInLeft {
+      from { transform: translateX(-30px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes type {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.15; }
+      50% { opacity: 0.3; }
+    }
+
+    @keyframes scan {
+      0% { left: -100%; }
+      50% { left: 100%; }
+      100% { left: 100%; }
+    }
+
+    .gallery-card:nth-child(1) { --order: 1; }
+    .gallery-card:nth-child(2) { --order: 2; }
+    .gallery-card:nth-child(3) { --order: 3; }
+    .gallery-card:nth-child(4) { --order: 4; }
+    .gallery-card:nth-child(5) { --order: 5; }
+    .gallery-card:nth-child(6) { --order: 6; }
+  </style>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="business.html">Business</a></li>
+      <li><a href="artists.html">Artists</a></li>
+      <li><a href="goods.html">Shop</a></li>
+      <li><a href="careers.html">Careers</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="shareholder.html">Shareholder</a></li>
+      <li><a href="partnerships.html">Partnerships</a></li>
+      <li><a href="gallery.html" class="active" aria-current="page">Gallery</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <h1>Gallery</h1>
+    <p>Explore best Moments / Featuring Sumimi, Ave Mujica, and More!</p>
+  </section>
+
+  <section id="gallery">
+    <h2>Gallery</h2>
+    <div class="gallery-grid">
+      <div class="gallery-card" data-source="https://media1.tenor.com/m/-JjnV9Y9uTMAAAAd/uika-misumi-sumida-mana.gif">
+        <img src="https://media1.tenor.com/m/-JjnV9Y9uTMAAAAd/uika-misumi-sumida-mana.gif" alt="Sumimi Sweet Escape album cover">
+        <h3>Sumimi</h3>
+        <p>Uika and Mana!</p>
+      </div>
+      <div class="gallery-card" data-source="https://media1.tenor.com/m/lZHm5RgKwkUAAAAd/ave-mujica-ave-muji.gif">
+        <img src="https://media1.tenor.com/m/lZHm5RgKwkUAAAAd/ave-mujica-ave-muji.gif" alt="Ave Mujica Kuro no Birthday album cover">
+        <h3>Oblivionis</h3>
+        <p>Our band's leader, Oblivionis.</p>
+      </div>
+      <div class="gallery-card" data-source="https://media1.tenor.com/m/1w_clZk2vikAAAAd/sakiko-togawa-uika-misumi.gif">
+        <img src="https://media1.tenor.com/m/1w_clZk2vikAAAAd/sakiko-togawa-uika-misumi.gif" alt="Sumimi live performance 2025">
+        <h3>Imprisoned XII</h3>
+        <p>One of the most touching song of Ave Mujica.</p>
+      </div>
+      <div class="gallery-card" data-source="https://media1.tenor.com/m/y4m_hqoK7VUAAAAC/bandori-bang-dream.gif">
+        <img src="https://media1.tenor.com/m/y4m_hqoK7VUAAAAC/bandori-bang-dream.gif" alt="Ave Mujica live performance 2025">
+        <h3>Rich Timoris</h3>
+        <p>Our generous salary executor.</p>
+      </div>
+      <div class="gallery-card" data-source="https://media1.tenor.com/m/kUo8gmTUPFIAAAAC/uika-uika-misumi.gif">
+        <img src="https://media1.tenor.com/m/kUo8gmTUPFIAAAAC/uika-uika-misumi.gif" alt="Uika Misumi character artwork">
+        <h3>KillKiss──Doloris</h3>
+        <p>Ave Mujica's coolest Vocalist!</p>
+      </div>
+      <div class="gallery-card" data-source="https://media1.tenor.com/m/85-W7KqZsRIAAAAC/ave-mujica-wakaba-mutsumi.gif">
+        <img src="https://media1.tenor.com/m/85-W7KqZsRIAAAAC/ave-mujica-wakaba-mutsumi.gif" alt="Anon Tokyo costume design">
+        <h3>Alter Ego──Mortis</h3>
+        <p>Mortis can act and play guitar.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="lightbox" id="gallery-lightbox">
+    <button class="close" aria-label="Close lightbox">✖</button>
+    <button class="prev" aria-label="Previous image">◄</button>
+    <button class="next" aria-label="Next image">►</button>
+    <img src="" alt="Lightbox image">
+  </div>
+
+  <footer>
+    <p>© 2025 Win-Wing Production Inc.</p>
+    <p>This is a fanmade website and is not affiliated with Bushiroad, BanG Dream! It's MyGO!!!!!, or Ave Mujica.</p>
+  </footer>
+
+  <script>
+    const lightbox = document.getElementById('gallery-lightbox');
+    const lightboxImg = lightbox.querySelector('img');
+    const closeBtn = lightbox.querySelector('.close');
+    const prevBtn = lightbox.querySelector('.prev');
+    const nextBtn = lightbox.querySelector('.next');
+    const galleryCards = document.querySelectorAll('.gallery-card');
+    let currentIndex = -1;
+
+    galleryCards.forEach((card, index) => {
+      card.addEventListener('click', () => {
+        currentIndex = index;
+        lightboxImg.src = card.dataset.source;
+        lightboxImg.alt = card.querySelector('img').alt;
+        lightbox.classList.add('active');
+      });
+    });
+
+    closeBtn.addEventListener('click', () => {
+      lightbox.classList.remove('active');
+    });
+
+    prevBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + galleryCards.length) % galleryCards.length;
+      lightboxImg.src = galleryCards[currentIndex].dataset.source;
+      lightboxImg.alt = galleryCards[currentIndex].querySelector('img').alt;
+    });
+
+    nextBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % galleryCards.length;
+      lightboxImg.src = galleryCards[currentIndex].dataset.source;
+      lightboxImg.alt = galleryCards[currentIndex].querySelector('img').alt;
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (lightbox.classList.contains('active')) {
+        if (e.key === 'Escape') {
+          closeBtn.click();
+        } else if (e.key === 'ArrowLeft') {
+          prevBtn.click();
+        } else if (e.key === 'ArrowRight') {
+          nextBtn.click();
+        }
+      }
+    });
+  </script>
+</body>
+</html>

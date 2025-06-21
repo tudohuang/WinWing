@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore partnerships with Win-Wing Production, powering BanG Dream! with Bushiroad, Anon Tokyo, and Togawa Group.">
+  <title>Partnerships - Win-Wing Production Inc.</title>
+  <style>
+    :root {
+      --primary-color: #f8fafc;
+      --secondary-color: #d4c08a;
+      --accent-color: #8b5cf6;
+      --text-color: #1f2937;
+      --glass-bg: rgba(255, 255, 255, 0.2);
+      --glass-border: 1px solid rgba(255, 255, 255, 0.3);
+      --glow-shadow: 0 0 8px rgba(139, 92, 246, 0.2);
+      --dark-bg: rgba(31, 41, 55, 0.6);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', 'Noto Sans JP', sans-serif;
+    }
+
+    body {
+      color: var(--text-color);
+      line-height: 1.9;
+      background: var(--primary-color);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 1px, transparent 1px);
+      background-size: 8px 8px;
+      animation: twinkle 6s infinite;
+      z-index: -1;
+      opacity: 0.15;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: var(--glass-bg);
+      backdrop-filter: blur(15px);
+      border-bottom: var(--glass-border);
+      z-index: 1000;
+      padding: 1.5rem 2rem;
+      animation: slideInDown 0.5s ease-out;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+    }
+
+    nav a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.1rem;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    nav a.active {
+      color: var(--accent-color);
+      font-weight: 600;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background: var(--accent-color);
+      transition: width 0.3s;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    nav a:hover {
+      color: var(--accent-color);
+    }
+
+    section {
+      padding: 6rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      opacity: 0;
+      animation: fadeIn 0.8s ease-out forwards;
+      animation-delay: 0.1s;
+    }
+
+    .hero {
+      height: 60vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: var(--primary-color);
+      color: var(--text-color);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.2) 1px, transparent 1px);
+      background-size: 15px 15px;
+      opacity: 0.2;
+      animation: twinkle 7s infinite;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      z-index: 1;
+      overflow: hidden;
+      white-space: nowrap;
+      animation: type 3s steps(40) forwards;
+    }
+
+    .hero p {
+      font-size: 1.6rem;
+      font-weight: 300;
+      z-index: 1;
+      opacity: 0;
+      animation: slideInUp 0.6s ease-out 3.2s forwards;
+    }
+
+    h2 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--text-color);
+      position: relative;
+    }
+
+    h2::before {
+      content: '❱';
+      position: absolute;
+      left: -2rem;
+      color: var(--accent-color);
+      font-size: 1.3rem;
+    }
+
+    .filter-container {
+      margin-bottom: 2rem;
+    }
+
+    .filter-container select {
+      padding: 0.8rem;
+      font-size: 1rem;
+      border: 2px solid var(--accent-color);
+      border-radius: 5px;
+      background: var(--glass-bg);
+      color: var(--text-color);
+      cursor: pointer;
+      transition: border-color 0.3s;
+    }
+
+    .filter-container select:hover,
+    .filter-container select:focus {
+      border-color: var(--secondary-color);
+      outline: none;
+    }
+
+    .partnership-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .partnership-card {
+      background: var(--glass-bg);
+      border: var(--glass-border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      opacity: 0;
+      animation: slideInRight 0.8s ease-out forwards;
+    }
+
+    .partnership-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--glow-shadow);
+    }
+
+    .partnership-card.blink {
+      animation: blink 0.3s ease;
+    }
+
+    .partnership-card img {
+      width: 300px;
+      height: 200px;
+      object-fit: contain;
+      margin-bottom: 1rem;
+    }
+
+    .partnership-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      font-family: 'Consolas', 'Courier New', monospace;
+      position: relative;
+    }
+
+    .partnership-card h3::before {
+      content: '➤';
+      margin-right: 0.5rem;
+      color: var(--accent-color);
+    }
+
+    .partnership-card p {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      font-family: 'Consolas', 'Courier New', monospace;
+    }
+
+    .partnership-card a {
+      color: var(--accent-color);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    .partnership-card a:hover {
+      color: var(--secondary-color);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-content {
+      background: var(--glass-bg);
+      border: var(--glass-border);
+      border-radius: 10px;
+      padding: 2rem;
+      max-width: 80vw;
+      max-height: 80vh;
+      overflow-y: auto;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal .close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      color: var(--primary-color);
+      font-size: 2rem;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .modal .close:hover {
+      color: var(--secondary-color);
+    }
+
+    .modal h3 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: var(--text-color);
+    }
+
+    .modal p {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      padding-left: 2.5rem;
+      position: relative;
+      font-family: 'Consolas', 'Courier New', monospace;
+    }
+
+    .modal p::before {
+      content: '➤';
+      position: absolute;
+      left: 0;
+      color: var(--accent-color);
+    }
+
+    footer {
+      background: var(--primary-color);
+      color: var(--text-color);
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9rem;
+      font-weight: 300;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero p {
+        font-size: 1.2rem;
+      }
+
+      .partnership-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      }
+
+      .partnership-card {
+        font-size: 0.85rem;
+      }
+
+      .modal-content {
+        max-width: 90vw;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .partnership-grid {
+        grid-template-columns: 1fr;
+        min-width: 250px;
+      }
+
+      .modal-content {
+        max-width: 100vw;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideInDown {
+      from { transform: translateY(-100%); }
+      to { transform: translateY(0); }
+    }
+
+    @keyframes slideInUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes slideInRight {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes type {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.15; }
+      50% { opacity: 0.3; }
+    }
+
+    @keyframes scan {
+      0% { left: -100%; }
+      50% { left: 100%; }
+      100% { left: 100%; }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .partnership-card:nth-child(1) { animation-delay: 0.1s; }
+    .partnership-card:nth-child(2) { animation-delay: 0.2s; }
+    .partnership-card:nth-child(3) { animation-delay: 0.3s; }
+  </style>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="business.html">Business</a></li>
+      <li><a href="artists.html">Artists</a></li>
+      <li><a href="goods.html">Shop</a></li>
+      <li><a href="careers.html">Careers</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="shareholder.html">Shareholder</a></li>
+      <li><a href="partnerships.html">Partnerships</a></li>
+      <li><a href="gallery.html" class="active" aria-current="page">Gallery</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <h1>Our Partners</h1>
+    <p>Powering BanG Dream!</p>
+  </section>
+
+  <section id="partnerships">
+    <h2>Our Collaborations</h2>
+    <div class="filter-container">
+      <select id="sort-options" aria-label="Sort partnerships">
+        <option value="brand-asc">Brand: A-Z</option>
+        <option value="brand-desc">Brand: Z-A </option>
+        <option value="type-asc">Type: A-Z </option>
+        <option value="type-desc">Type: Z-A /</option>
+      </select>
+    </div>
+    <div class="partnership-grid">
+      <div class="partnership-card" data-brand="Anon Tokyo" data-type="Clothing" data-details="Win-Wing Production partners with Anon Tokyo to design exclusive performance outfits for Sumimi and MyGO!!!!! for their 2025 joint LIVE. Led by Chihaya Anon, the designs blend MyGO!!!!!'s youthful energy with Sumimi's vibrant rhythm, with Win-Wing providing marketing support. / Win-Wing Production 與 Anon Tokyo 合作，為 Sumimi 和 MyGO!!!!! 的 2025 年聯合 LIVE 設計專屬演出服。由千早愛音領導，設計融合 MyGO!!!!! 的青春活力與 Sumimi 的明快節奏，Win-Wing 提供行銷支援。">
+        <img src="https://www.anon.tokyo/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fshow.6a6d43fd.jpg&w=1920&q=75" alt="Anon Tokyo logo">
+        <h3>Anon Tokyo</h3>
+        <p>Designing exclusive performance outfits!</p>
+        <a href="https://www.anon.tokyo/" target="_blank" aria-label="Visit Anon Tokyo website">Visit Website</a>
+      </div>
+      <div class="partnership-card" data-brand="Togawa Group" data-type="Sponsorship" data-details="Togawa Group provides financial sponsorship for Win-Wing Production's joint LIVE with Anon Tokyo, ensuring high-quality events. Sakiko Togawa oversees clothing and event integration, with their iconic jingle featured in promotions. / Togawa Group 為 Win-Wing Production 與 Anon Tokyo 的聯合 LIVE 提供財務贊助，確保高品質活動。Sakiko Togawa 監督服裝與活動整合，其標誌性廣告曲融入推廣。">
+        <img src="https://i.ytimg.com/vi/HV5XG6M3cdA/maxresdefault.jpg" alt="Togawa Group logo">
+        <h3>Togawa Group</h3>
+        <p>Financial sponsorship for events, with creative input from Sakiko Togawa.</p>
+        <a href="https://tgw-group.ltd/" target="_blank" aria-label="Visit Togawa Group website">Visit Website</a>
+      </div>
+    </div>
+  </section>
+
+
+  <footer>
+    <p>© 2025 Win-Wing Production Inc.</p>
+    This site is fan-made and not affiliated with Bushiroad, BanG Dream! It's MyGO!!!!!, or Ave Mujica.</p>
+  </footer>
+
+  <script>
+    function sortPartnerships() {
+      const grid = document.querySelector('.partnership-grid');
+      const cards = Array.from(grid.querySelectorAll('.partnership-card'));
+      const sortOption = document.getElementById('sort-options').value;
+
+      cards.sort((a, b) => {
+        let aValue, bValue;
+        if (sortOption === 'brand-asc') {
+          aValue = a.dataset.brand;
+          bValue = b.dataset.brand;
+        } else if (sortOption === 'brand-desc') {
+          aValue = b.dataset.brand;
+          bValue = a.dataset.brand;
+        } else if (sortOption === 'type-asc') {
+          aValue = a.dataset.type;
+          bValue = b.dataset.type;
+        } else if (sortOption === 'type-desc') {
+          aValue = b.dataset.type;
+          bValue = a.dataset.type;
+        }
+        return aValue.localeCompare(bValue);
+      });
+
+      grid.innerHTML = '';
+      cards.forEach(card => grid.appendChild(card));
+    }
+
+    document.getElementById('sort-options').addEventListener('change', sortPartnerships);
+
+    function openModal(title, details) {
+      const modal = document.getElementById('partnership-modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalDetails = document.getElementById('modal-details');
+      modalTitle.textContent = title;
+      modalDetails.textContent = details;
+      modal.classList.add('active');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('partnership-modal');
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+
+    document.querySelectorAll('.partnership-card').forEach(card => {
+      card.addEventListener('click', (e) => {
+        if (e.target.tagName !== 'A') {
+          card.classList.add('blink');
+          setTimeout(() => card.classList.remove('blink'), 300);
+          const title = card.querySelector('h3').textContent;
+          const details = card.dataset.details;
+          openModal(title, details);
+        }
+      });
+    });
+
+    document.querySelector('.modal').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) {
+        closeModal();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    });
+  </script>
+</body>
+</html>
